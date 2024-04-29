@@ -1,0 +1,47 @@
+#Nathaniel Ceballos
+#CIS-245
+
+#!bin/bash
+
+output_dir="/home/nceballos/Shared Folder"
+current_date=$(date +"%Y-%m-%d")
+output_filename="network_info_${current_date}.txt"
+output_file="${output_dir}/${output_filename}"
+
+exec &> >(tee -a "$output_file")
+
+echo "Network Information for $current_date"
+echo "--------------------------------------"
+echo "Hostname: $(hostname)"
+echo "--------------------------------------"
+echo "Date and Time: $(date)"
+echo "--------------------------------------"
+echo "IP Addresses:"
+ifconfig -a
+echo "--------------------------------------"
+echo "DNS Servers:"
+resolv_conf="/etc/resolv.conf"
+if [ -h "$resolv_conf" ]; then
+	linked_file=$(readlink -f "resolv_conf")
+	echo "Resolv.conf is a symlink to: $linked_file"
+	if [ -e "$linked_file" ]; then
+		cat "$linked_file"
+	else
+		echo "Linked file does not exist."
+	fi	
+else
+	cat "$resolv_conf"
+fi
+echo "--------------------------------------"
+echo "Open Ports:"
+netstat -tuln
+echo "--------------------------------------"
+echo "ARP Table:"
+sudo iptables -L
+echo "--------------------------------------"
+echo "Routing Table:"
+route -n
+echo "--------------------------------------"
+
+
+echo "Network information has been saved to: $output_file"
