@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Define the output directory and filename
+output_dir="/path/to/output_directory"
+current_date=$(date +"%Y-%m-%d")
+output_filename="network_info_${current_date}.txt"
+output_file="${output_dir}/${output_filename}"
+
+# Redirect standard output to both the terminal and the file
+exec &> >(tee -a "$output_file")
+
+# Get system network information
+echo "Network Information Dump for $current_date"
+echo "---------------------------------------"
+echo "Hostname: $(hostname)"
+echo "Date and Time: $(date)"
+echo "---------------------------------------"
+echo "IP Addresses:"
+ip addr show
+echo "---------------------------------------"
+echo "DNS Servers:"
+cat /etc/resolv.conf
+echo "---------------------------------------"
+echo "Open Ports:"
+ss -tuln
+echo "---------------------------------------"
+echo "ARP Table:"
+ip neigh show
+echo "---------------------------------------"
+echo "Firewall Status:"
+iptables -L
+echo "---------------------------------------"
+echo "Routing Table:"
+ip route show
+echo "---------------------------------------"
+
+# Notify the user about the file location
+echo "Network information has been saved to: $output_file"
