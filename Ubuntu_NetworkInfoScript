@@ -1,7 +1,7 @@
 #Nathaniel Ceballos
 #CIS-245
 
-#!bin/bash
+#!/bin/bash
 
 output_dir="/home/nceballos/Shared Folder"
 current_date=$(date +"%Y-%m-%d")
