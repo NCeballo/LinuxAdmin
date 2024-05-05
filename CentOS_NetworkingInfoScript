@@ -1,15 +1,15 @@
+#Nathaniel Ceballos
+#CIS-245
+
 #!/bin/bash
 
-# Define the output directory and filename
-output_dir="/path/to/output_directory"
+output_dir="/home/nceballos/Shared_Folder"
 current_date=$(date +"%Y-%m-%d")
 output_filename="network_info_${current_date}.txt"
 output_file="${output_dir}/${output_filename}"
 
-# Redirect standard output to both the terminal and the file
 exec &> >(tee -a "$output_file")
 
-# Get system network information
 echo "Network Information Dump for $current_date"
 echo "---------------------------------------"
 echo "Hostname: $(hostname)"
@@ -34,5 +34,4 @@ echo "Routing Table:"
 ip route show
 echo "---------------------------------------"
 
-# Notify the user about the file location
 echo "Network information has been saved to: $output_file"
