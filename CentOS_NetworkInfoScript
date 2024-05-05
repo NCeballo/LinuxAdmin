@@ -3,14 +3,14 @@
 
 #!/bin/bash
 
-output_dir="/home/nceballos/Shared_Folder"
+output_dir="/home/nceballos/Shared Folder"
 current_date=$(date +"%Y-%m-%d")
 output_filename="network_info_${current_date}.txt"
 output_file="${output_dir}/${output_filename}"
 
 exec &> >(tee -a "$output_file")
 
-echo "Network Information Dump for $current_date"
+echo "Network Information for $current_date"
 echo "---------------------------------------"
 echo "Hostname: $(hostname)"
 echo "Date and Time: $(date)"
